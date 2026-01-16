@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You 💖</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: "Comic Sans MS", Arial, sans-serif;
+      background: linear-gradient(#ffe6f0, #fff);
+      overflow: hidden;
+      margin-top: 80px;
+    }
+
+    h2 {
+      color: #ff4d88;
+      transition: 0.3s;
+    }
+
+    button {
+      font-size: 60px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      animation: bounce 1.2s infinite;
+    }
+
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: float 3s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-120px); }
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      font-size: 22px;
+      color: #ff4d88;
+      z-index: 10;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 9;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2 id="msg">Tap the heart 💕</h2>
+
+<button onclick="next()">❤️</button>
+
+<div class="overlay" id="overlay"></div>
+<div class="popup" id="popup">
+  💖 You unlocked my heart 💖<br><br>
+  I love you so much 🥹
+</div>
+
+<audio id="clickSound">
+  <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3">
+</audio>
+
+<script>
+  let messages = [
+    "Hey you 😊",
+    "Yes… YOU 💗",
+    "You make my heart feel safe 🫶",
+    "Thinking about you makes me smile 💕",
+    "You are my favorite person 🥰",
+    "One last thing…",
+    "Tap again 💖"
+  ];
+
+  let i = 0;
+
+  function next() {
+    document.getElementById("clickSound").play();
+    createHeart();
+
+    if (i < messages.length) {
+      document.getElementById("msg").innerText = messages[i];
+      i++;
+    } else {
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("popup").style.display = "block";
+      confetti();
+    }
+  }
+
+  function createHeart() {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top = "70%";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 3000);
+  }
+
+  function confetti() {
+    for (let i = 0; i < 40; i++) {
+      let conf = document.createElement("div");
+      conf.className = "heart";
+      conf.innerText = "🎉";
+      conf.style.left = Math.random() * window.innerWidth + "px";
+      conf.style.top = Math.random() * window.innerHeight + "px";
+      document.body.appendChild(conf);
+
+      setTimeout(() => conf.remove(), 3000);
+    }
+  }
+</script>
+
+</body>
+</html>
